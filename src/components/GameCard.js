@@ -1,5 +1,5 @@
 import React from 'react';
-import './GameCard.css';
+import '../styles/GameCard.css';
 
 function GameCard({ jogo }) {
   return (

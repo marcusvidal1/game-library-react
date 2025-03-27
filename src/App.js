@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import GameCard from './components/GameCard';
+import Filtros from './components/filtros';
 import './styles/App.css';
 import { GiConsoleController } from "react-icons/gi";
-import { FaWindows, FaPlaystation, FaXbox } from "react-icons/fa";
-import { BsNintendoSwitch } from "react-icons/bs";
 
 function App() {
   const [jogos, setJogos] = useState([]);
@@ -11,30 +10,44 @@ function App() {
   const [generoSelecionado, setGeneroSelecionado] = useState(null);
   const [plataformaSelecionada, setPlataformaSelecionada] = useState(null);
   const [paginaAtual, setPaginaAtual] = useState(1);
-  
-  const buscarJogos = async (pagina = 1) => {
+
+  const buscarJogos = async (pagina = 1, genero = generoSelecionado, plataforma = plataformaSelecionada) => {
     try {
-      const resposta = await fetch(`https://api.rawg.io/api/games?key=b26202915ae34f5e9889171335d53908&page=${pagina}&page_size=20`);
+      let url = `https://api.rawg.io/api/games?key=b26202915ae34f5e9889171335d53908&page=${pagina}&page_size=20`;
+
+      if (genero) url += `&genres=${genero}`;
+
+      const plataformasMap = {
+        'PC': '4',
+        'PlayStation 5': '187',
+        'Xbox Series S/X': '186',
+        'Nintendo Switch': '7'
+      };
+
+      if (plataforma && plataformasMap[plataforma]) {
+        url += `&platforms=${plataformasMap[plataforma]}`;
+      }
+
+      const resposta = await fetch(url);
       const dados = await resposta.json();
 
-      if (pagina === 1) {
-        setJogos(dados.results);
-      } else {
-        setJogos(prev => [...prev, ...dados.results]);
-      }
+      if (pagina === 1) setJogos(dados.results);
+      else setJogos(prev => [...prev, ...dados.results]);
+
     } catch (erro) {
       console.log('Erro ao buscar jogos:', erro);
     }
   };
 
   useEffect(() => {
-    buscarJogos();
-  }, []);
+    setPaginaAtual(1);
+    buscarJogos(1, generoSelecionado, plataformaSelecionada);
+  }, [generoSelecionado, plataformaSelecionada]);
 
   const carregarMais = () => {
-    const proxima = paginaAtual + 1;
-    setPaginaAtual(proxima);
-    buscarJogos(proxima);
+    const proximaPagina = paginaAtual + 1;
+    setPaginaAtual(proximaPagina);
+    buscarJogos(proximaPagina, generoSelecionado, plataformaSelecionada);
   };
 
   return (
@@ -52,58 +65,20 @@ function App() {
         className="campo-busca"
       />
 
-      {/* Filtro por gênero */}
-      <div className="filtros-genero">
-        <button
-          onClick={() => setGeneroSelecionado(null)}
-          className={!generoSelecionado ? 'ativo' : ''}
-        >
-          Todos
-        </button>
+      <Filtros
+        jogos={jogos}
+        generoSelecionado={generoSelecionado}
+        setGeneroSelecionado={setGeneroSelecionado}
+        plataformaSelecionada={plataformaSelecionada}
+        setPlataformaSelecionada={setPlataformaSelecionada}
+      />
 
-        {[...new Set(jogos.flatMap(jogo => jogo.genres.map(g => g.name)))].sort()
-          .map((genero) => (
-            <button
-              key={genero}
-              onClick={() => setGeneroSelecionado(genero)}
-              className={generoSelecionado === genero ? 'ativo' : ''}
-            >
-              {genero}
-            </button>
-          ))}
-      </div>
-
-      {/* Filtro por plataforma */}
-      <div className="filtros-plataforma">
-        <button
-          onClick={() => setPlataformaSelecionada(null)}
-          className={!plataformaSelecionada ? 'ativo' : ''}
-        >
-          Todas
-        </button>
-
-        {['PC', 'PlayStation 5', 'Xbox Series S/X', 'Nintendo Switch'].map((plataforma) => (
-          <button
-            key={plataforma}
-            onClick={() => setPlataformaSelecionada(plataforma)}
-            className={plataformaSelecionada === plataforma ? 'ativo' : ''}
-          >
-            {plataforma === 'PC' && <FaWindows />}
-            {plataforma === 'PlayStation 5' && <FaPlaystation />}
-            {plataforma === 'Xbox Series S/X' && <FaXbox />}
-            {plataforma === 'Nintendo Switch' && <BsNintendoSwitch />}
-            {` ${plataforma}`}
-          </button>
-        ))}
-      </div>
-
-      {/* Lista de jogos */}
       <div className="lista-jogos">
-        {jogos
-          .filter((jogo) => {
+        {jogos.filter((jogo) => {
             const nomeMatch = jogo.name.toLowerCase().includes(busca.toLowerCase());
             const generoMatch =
-              !generoSelecionado || jogo.genres.some((g) => g.name === generoSelecionado);
+              !generoSelecionado || jogo.genres.some((g) => g.id === generoSelecionado);
+
             const plataformaMatch =
               !plataformaSelecionada || jogo.platforms.some((p) => p.platform.name === plataformaSelecionada);
 
@@ -114,7 +89,6 @@ function App() {
           ))}
       </div>
 
-      {/* Botão "Carregar mais" */}
       <div className="carregar-mais">
         <button onClick={carregarMais}>Carregar mais jogos</button>
       </div>

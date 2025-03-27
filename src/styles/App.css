@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Bokor&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+:root {
+    --cor-fundo: #1b1b1f;
+    --cor-cartao: #25252b;
+    --cor-borda: #facc15;
+    --cor-hover: rgba(255, 255, 255, 0.05);
+    --cor-titulo: #ffffff;
+    --cor-texto: #e0e0e0;
+    --cor-subtexto: #facc15;
+    --cor-destaque: #facc15;
+    --sombra-leve: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --sombra-hover: 0 6px 20px rgba(0, 0, 0, 0.6);
+    --fonte-principal: "Bokor", system-ui;
+    --fonte-secundaria: "Roboto Flex", sans-serif;
+}
+
+
+body {
+    margin: 0;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: var(--cor-titulo);
+    margin-bottom: 30px;
+    font-family: var(--fonte-principal);
+    
+    
+}
+
+.icone {
+    font-size: 3rem;
+    color: var(--cor-fundo);
+    background-color: var(--cor-destaque);
+    border-radius: 8px;
+    padding: 2px;
+    margin-bottom: 7px;
+    
+}
+
+.campo-busca {
+    display: block;
+    margin: 0 auto 40px auto;
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-cartao);
+    color: var(--cor-texto);
+    box-shadow: 0 2px 6px var(--cor-hover);
+    outline: none;
+    transition: 0.2s;
+}
+
+.campo-busca:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.3);
+}
+
+.filtros-genero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 13px;
+    margin-bottom: 30px;
+}
+
+.filtros-genero button {
+    padding: 15px 22px;
+    border-radius: 20px;
+    border: 2px solid var(--cor-borda);
+    background-color: var(--cor-cartao);
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--fonte-secundaria);
+}
+
+.filtros-genero button:hover {
+    border-color: var(--cor-destaque);
+}
+
+.filtros-genero .ativo {
+    background-color: var(--cor-destaque);
+    color: #000;
+    font-weight: bold;
+}
+
+.filtros-plataforma {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .filtros-plataforma button {
+    padding: 12px 12px;
+    border-radius: 20px;
+    border: 2px solid var(--cor-borda);
+    background-color: var(--cor-cartao);
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--fonte-secundaria);
+  }
+
+  .filtros-plataforma button svg {
+    margin-right: 6px;
+    font-size: 1rem;
+    vertical-align: middle;
+    vertical-align: text-bottom;
+  }
+  
+  .filtros-plataforma button:hover {
+    border-color: var(--cor-destaque);
+  }
+  
+  .filtros-plataforma .ativo {
+    background-color: var(--cor-destaque);
+    color: #000;
+    font-weight: bold;
+  }
+
+.lista-jogos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.carregar-mais {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .carregar-mais button {
+    padding: 10px 20px;
+    background-color: var(--cor-destaque);
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+  }

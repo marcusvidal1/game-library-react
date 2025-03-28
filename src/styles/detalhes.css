@@ -1,0 +1,63 @@
+.pagina-detalhes {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: #fff;
+    padding: 60px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Roboto Flex", sans-serif;
+  }
+  
+  .pagina-detalhes::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.87); /* escurece a imagem de fundo */
+    z-index: 0;
+  }
+  
+  .conteudo-detalhes {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(30, 30, 30, 0.85);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.534);
+  }
+  
+  .conteudo-detalhes h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #facc15;
+    font-family: "Bokor", system-ui;
+    text-align: center;
+  }
+  
+  .detalhes-capa {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .conteudo-detalhes p {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: #e0e0e0;
+  }
+  
+  .conteudo-detalhes p strong {
+    color: #facc15;
+  }
+  
+  .carregando {
+    text-align: center;
+    padding: 80px;
+    font-size: 1.5rem;
+    color: #fff;
+  }

@@ -34,3 +34,7 @@
     margin: 0 10px 10px 10px;
   }
   
+  .card-jogo {
+    text-decoration: none;
+    color: inherit;
+  }

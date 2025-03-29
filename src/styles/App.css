@@ -54,11 +54,9 @@ body {
 }
 
 .campo-busca {
-  display: block;
-  margin: 0 auto 40px auto;
   padding: 12px 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px; 
   font-size: 16px;
   border-radius: 30px;
   border: 1px solid var(--cor-borda);
@@ -68,11 +66,50 @@ body {
   outline: none;
   transition: 0.2s;
   backdrop-filter: blur(4px);
+  height: 44px;
 }
-
 .campo-busca:focus {
   border-color: var(--cor-destaque);
   box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.3);
+}
+
+.barra-superior {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.ordenar-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--fonte-secundaria);
+  color: var(--cor-texto);
+  background-color: var(--cor-cartao);
+  padding: 8px 14px;
+  border-radius: 30px;
+  border: 2px solid var(--cor-borda);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--sombra-leve);
+}
+
+.ordenar-dropdown label {
+  font-weight: bold;
+}
+
+.ordenar-dropdown select {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: var(--cor-cartao);
+  color: var(--cor-texto);
+  border: none;
+  font-family: var(--fonte-secundaria);
+  font-size: 0.95rem;
+  outline: none;
+  height: 44px;
 }
 
 .lista-jogos {

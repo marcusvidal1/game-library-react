@@ -5,6 +5,7 @@ import { GiConsoleController } from "react-icons/gi";
 import '../styles/App.css';
 import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
+import Slides from '../components/Slides';
 
 function Home() {
   const [jogos, setJogos] = useState([]);
@@ -88,6 +89,8 @@ function Home() {
           <span>Game Library</span>
         </div>
 
+        <Slides />
+
         <div className="barra-superior">
           <input
             type="text"
@@ -113,7 +116,6 @@ function Home() {
         </div>
 
         <Filtros
-          jogos={jogos}
           generoSelecionado={generoSelecionado}
           setGeneroSelecionado={setGeneroSelecionado}
           plataformaSelecionada={plataformaSelecionada}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/detalhes.css';
+import { FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function Detalhes() {
   const { id } = useParams();
@@ -28,6 +30,9 @@ function Detalhes() {
       style={{ backgroundImage: `url(${jogo.background_image})` }}
     >
       <div className="conteudo-detalhes">
+        <Link to="/" className="btn-voltar-home">
+          <FaHome />
+        </Link>
         <h1>{jogo.name}</h1>
         <img
           className="detalhes-capa"

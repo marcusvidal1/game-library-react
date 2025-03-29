@@ -1,64 +1,41 @@
-.filtros-genero {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 13px;
-    margin-bottom: 30px;
-}
-
-.filtros-genero button {
-    padding: 15px 22px;
-    border-radius: 20px;
-    border: 2px solid var(--cor-borda);
-    background-color: var(--cor-cartao);
-    color: var(--cor-texto);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--fonte-secundaria);
-}
-
-.filtros-genero button:hover {
-    border-color: var(--cor-destaque);
-}
-
-.filtros-genero .ativo {
-    background-color: var(--cor-destaque);
-    color: #000;
-    font-weight: bold;
-}
-
+.filtros-genero,
 .filtros-plataforma {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 30px;
-  }
-  
-  .filtros-plataforma button {
-    padding: 12px 12px;
-    border-radius: 20px;
-    border: 2px solid var(--cor-borda);
-    background-color: var(--cor-cartao);
-    color: var(--cor-texto);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--fonte-secundaria);
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
 
-  .filtros-plataforma button svg {
-    margin-right: 6px;
-    font-size: 1rem;
-    vertical-align: middle;
-    vertical-align: text-bottom;
-  }
-  
-  .filtros-plataforma button:hover {
-    border-color: var(--cor-destaque);
-  }
-  
-  .filtros-plataforma .ativo {
-    background-color: var(--cor-destaque);
-    color: #000;
-    font-weight: bold;
-  }
+.filtros-genero button,
+.filtros-plataforma button {
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: 2px solid var(--cor-borda);
+  background-color: rgba(37, 37, 43, 0.7); /* com transparência */
+  color: var(--cor-texto);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--fonte-secundaria);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.filtros-genero button:hover,
+.filtros-plataforma button:hover {
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 10px var(--cor-destaque);
+}
+
+.filtros-genero .ativo,
+.filtros-plataforma .ativo {
+  background-color: var(--cor-destaque);
+  color: #000;
+  font-weight: bold;
+}
+
+.filtros-plataforma button svg {
+  margin-right: 6px;
+  font-size: 1rem;
+  vertical-align: middle;
+}

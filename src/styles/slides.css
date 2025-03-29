@@ -18,14 +18,14 @@
   width: 250px;
   height: 400px;
   opacity: 0.5;
-  transition: opacity 1s ease-in-out, transform 1s ease-in-out; 
+  transition: opacity 1s ease-in-out, transform 1.5s ease-in-out; 
 }
 
 .swiper-slide-active {
   width: 350px;
   height: 500px;
   opacity: 1;
-  transition: width 0.2s ease-in-out, height 0.2s ease-in-out, opacity 0.8s ease-in-out; 
+  transition: width 1s ease-in-out, height 1s ease-in-out, opacity 0.8s ease-in-out; 
 }
 
 .swiper-slide-prev,

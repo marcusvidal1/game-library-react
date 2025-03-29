@@ -25,6 +25,7 @@ function Slides() {
         slidesPerGroup={1}
         spaceBetween={20}
         loop={true}
+        speed={1000}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
       >

@@ -81,3 +81,10 @@
     background-color: #ffe066;
     transform: scale(1.1);
   }
+  
+  .particles-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0.5; 
+    pointer-events: none;
+  }

@@ -38,3 +38,30 @@
     text-decoration: none;
     color: inherit;
   }
+
+  /*Tablets*/
+@media (min-width: 769px) and (max-width: 1023px) {
+  .card-jogo {
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+
+  .card-jogo img {
+    height: 130px; 
+  }
+
+  .card-jogo h3 {
+    font-size: 0.98rem;
+    margin: 9px;
+  }
+
+  .card-jogo p {
+    font-size: 0.8rem;
+    margin: 0 9px 9px 9px;
+  }
+
+  .card-jogo:hover {
+    transform: translateY(-3px);
+  }
+}
+

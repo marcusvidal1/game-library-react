@@ -39,3 +39,24 @@
   font-size: 1rem;
   vertical-align: middle;
 }
+
+/*Tablets*/
+@media (min-width: 769px) and (max-width: 1023px) {
+  .filtros-genero,
+  .filtros-plataforma {
+    gap: 10px; 
+    margin-bottom: 25px;
+  }
+
+  .filtros-genero button,
+  .filtros-plataforma button {
+    padding: 9px 16px; 
+    font-size: 0.9rem;
+  }
+
+  .filtros-plataforma button svg {
+    margin-right: 5px;
+    font-size: 0.95rem;
+  }
+}
+

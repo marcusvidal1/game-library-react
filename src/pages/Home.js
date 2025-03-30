@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import GameCard from '../components/GameCard';
 import Filtros from '../components/filtros';
 import { GiConsoleController } from "react-icons/gi";
@@ -15,6 +15,11 @@ function Home() {
   const [ordenacao, setOrdenacao] = useState('');
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [carregando, setCarregando] = useState(false);
+  const [totalResultados, setTotalResultados] = useState(0);
+  const observerRef = useRef(null);
+
+  const jogosExcluidos = [428090, 974923, 505805, 1000149, 1000019];
+  const jogosPorPagina = 20;
 
   const particlesInit = async (engine) => {
     await loadFull(engine);
@@ -24,11 +29,12 @@ function Home() {
     pagina = 1,
     genero = generoSelecionado,
     plataforma = plataformaSelecionada,
-    order = ordenacao
+    order = ordenacao,
+    termoBusca = busca
   ) => {
     try {
       setCarregando(true);
-      let url = `https://api.rawg.io/api/games?key=b26202915ae34f5e9889171335d53908&page=${pagina}&page_size=20`;
+      let url = `https://api.rawg.io/api/games?key=b26202915ae34f5e9889171335d53908&page=${pagina}&page_size=${jogosPorPagina}`;
 
       if (genero) url += `&genres=${genero}`;
       const plataformasMap = {
@@ -41,29 +47,67 @@ function Home() {
         url += `&platforms=${plataformasMap[plataforma]}`;
       }
       if (order) url += `&ordering=${order}`;
+      if (termoBusca) url += `&search=${encodeURIComponent(termoBusca)}`;
 
       const resposta = await fetch(url);
       const dados = await resposta.json();
 
-      if (pagina === 1) setJogos(dados.results);
-      else setJogos((prev) => [...prev, ...dados.results]);
+      const novosJogos = dados.results || [];
+      setTotalResultados(dados.count || 0);
+
+      if (pagina === 1) {
+        setJogos(novosJogos);
+      } else {
+        setJogos((prev) => [...prev, ...novosJogos]);
+      }
+
+      return novosJogos.length > 0;
     } catch (erro) {
       console.log('Erro ao buscar jogos:', erro);
+      return false;
     } finally {
       setCarregando(false);
     }
   };
 
+
   useEffect(() => {
     setPaginaAtual(1);
-    buscarJogos(1, generoSelecionado, plataformaSelecionada, ordenacao);
-  }, [generoSelecionado, plataformaSelecionada, ordenacao]);
+    setJogos([]);
+    buscarJogos(1, generoSelecionado, plataformaSelecionada, ordenacao, busca);
+  }, [generoSelecionado, plataformaSelecionada, ordenacao, busca]);
 
-  const carregarMais = () => {
-    const proxima = paginaAtual + 1;
-    setPaginaAtual(proxima);
-    buscarJogos(proxima, generoSelecionado, plataformaSelecionada, ordenacao);
-  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !carregando && jogos.length < totalResultados) {
+          const proximaPagina = paginaAtual + 1;
+          setPaginaAtual(proximaPagina);
+          buscarJogos(proximaPagina, generoSelecionado, plataformaSelecionada, ordenacao, busca);
+        }
+      },
+      { threshold: 0.1 } 
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [carregando, jogos.length, totalResultados, generoSelecionado, plataformaSelecionada, ordenacao, busca]);
+
+  const jogosFiltrados = jogos.filter((jogo) => {
+    const nomeMatch = jogo.name.toLowerCase().includes(busca.toLowerCase());
+    const generoMatch = !generoSelecionado || jogo.genres.some((g) => g.id === generoSelecionado);
+    const plataformaMatch = !plataformaSelecionada || jogo.platforms.some((p) => p.platform.name === plataformaSelecionada);
+    const excluido = jogosExcluidos.includes(jogo.id);
+    return nomeMatch && generoMatch && plataformaMatch && !excluido;
+  });
 
   return (
     <div className="pagina-home">
@@ -123,35 +167,24 @@ function Home() {
         />
 
         <div className="lista-jogos">
-          {jogos
-            .filter((jogo) => {
-              const nomeMatch = jogo.name.toLowerCase().includes(busca.toLowerCase());
-              const generoMatch = !generoSelecionado || jogo.genres.some((g) => g.id === generoSelecionado);
-              const plataformaMatch = !plataformaSelecionada || jogo.platforms.some((p) => p.platform.name === plataformaSelecionada);
-              return nomeMatch && generoMatch && plataformaMatch;
-            })
-            .map((jogo) => (
-              <GameCard key={jogo.id} jogo={jogo} />
-            ))}
+          {jogosFiltrados.map((jogo) => (
+            <GameCard key={jogo.id} jogo={jogo} />
+          ))}
         </div>
 
-        <div className="carregar-mais">
-          <button className="btn-loading" onClick={carregarMais} disabled={carregando}>
-            {carregando ? (
-              <>
-                Carregando
-                <span className="pontos">
-                  <span>.</span>
-                  <span>.</span>
-                  <span>.</span>
-                </span>
-              </>
-            ) : (
-              <>
-                Carregar mais <GiConsoleController />
-              </>
-            )}
-          </button>
+        
+        {carregando && (
+          <div className="loading-indicator">
+            Carregando mais jogos...
+          </div>
+        )}
+
+        
+        <div ref={observerRef} style={{ height: '20px' }}></div>
+
+        {/* Debug */}
+        <div style={{ marginTop: '20px', color: '#fff' }}>
+          Jogos exibidos: {jogosFiltrados.length} | Jogos carregados: {jogos.length} | Total: {totalResultados}
         </div>
       </div>
     </div>

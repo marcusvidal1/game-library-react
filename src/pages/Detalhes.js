@@ -3,6 +3,35 @@ import { useParams } from 'react-router-dom';
 import '../styles/detalhes.css';
 import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
+
+const particlesOptions = {
+  fullScreen: false,
+  background: {
+    color: { value: "transparent" }
+  },
+  fpsLimit: 60,
+  particles: {
+    number: { value: 180 },
+    color: { value: "#facc15" },
+    shape: { type: "circle" },
+    opacity: { value: 0.3 },
+    size: { value: { min: 1, max: 3 } },
+    collisions: {
+      enable: true
+    },
+    move: {
+      enable: true,
+      speed: 1,
+      direction: "none",
+      random: true,
+      straight: false,
+      outMode: "out"
+    }
+  },
+  detectRetina: true
+};
 
 function Detalhes() {
   const { id } = useParams();
@@ -29,6 +58,11 @@ function Detalhes() {
       className="pagina-detalhes"
       style={{ backgroundImage: `url(${jogo.background_image})` }}
     >
+      <Particles
+        className="particles-overlay"
+        options={particlesOptions}
+      />
+  
       <div className="conteudo-detalhes">
         <Link to="/" className="btn-voltar-home">
           <FaHome />

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/game-library-react/static/css/main.269d6152.css",
+    "main.js": "/game-library-react/static/js/main.14c82e64.js",
+    "index.html": "/game-library-react/index.html",
+    "main.269d6152.css.map": "/game-library-react/static/css/main.269d6152.css.map",
+    "main.14c82e64.js.map": "/game-library-react/static/js/main.14c82e64.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.269d6152.css",
+    "static/js/main.14c82e64.js"
+  ]
+}

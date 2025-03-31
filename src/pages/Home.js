@@ -18,7 +18,7 @@ function Home() {
   const [totalResultados, setTotalResultados] = useState(0);
   const observerRef = useRef(null);
 
-  const jogosExcluidos = [428090, 974923, 505805, 1000149, 1000019];
+  const jogosExcluidos = [428090, 974923, 505805, 1000149, 1000019, 684945];
   const jogosPorPagina = 20;
 
   const particlesInit = async (engine) => {
